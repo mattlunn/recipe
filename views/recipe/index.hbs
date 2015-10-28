@@ -1,1 +1,7 @@
-<h1>Welcome</h1>
+<h1>Recipes</h1>
+
+<ul>
+	{{#each recipes}}
+		<li><a href="/recipe/view/{{this.id}}">{{this.name}}</a></li>
+	{{/each}}
+</ul>
