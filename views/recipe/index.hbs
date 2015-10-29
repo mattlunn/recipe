@@ -20,6 +20,38 @@
 					{{/each}}
 				</tbody>
 			</table>
+
+			{{#unless (eq pages 1)}}
+				<nav>
+					<form>
+						<input type="hidden" name="name" value="{{filter.name}}"/>
+
+						{{#each filter.ingredient}}
+							<input type="hidden" name="ingredient" value="{{this}}" />
+						{{/each}}
+
+						<input type="hidden" name="time"
+							{{#if (isMax filter.time)}}
+								value=""
+							{{else}}
+								value="{{filter.time}}"
+							{{/if}}
+						/>
+
+						<ul class="pagination">
+							{{#unless (eq page 1)}}
+								<li><span><button name="page" value="{{dec page 1}}" class="btn btn-link btn-xs">&laquo;</button></span></li>
+							{{/unless}}
+
+							<li><span><button name="page" value="{{page}}" class="btn btn-link btn-xs">{{page}}</button></span></li>
+
+							{{#unless (eq page pages)}}
+								<li><span><button name="page" value="{{inc page 1}}" class="btn btn-link btn-xs">&raquo;</button></span></li>
+							{{/unless}}
+						</ul>
+					</form>
+				</nav>
+			{{/unless}}
 		{{else}}
 			<div class="alert alert-info" role="alert">
 				<p>Sorry, we currently have no recipes for you. Hopefully you're not hungry.</p>
@@ -39,7 +71,7 @@
 						<label>Ingredients</label>
 						{{#each filter.ingredients}}
 							<div class="input-group">
-								<input type="text" class="form-control" value="{{this}}" placeholder="Apples" name="ingredient">
+								<input type="text" class="form-control" value="{{this}}" placeholder="Apples" name="ingredient" />
 								<span class="input-group-btn">
 									<button class="btn btn-default" type="button"><i class="glyphicon glyphicon-plus"></i></button>
 								</span>

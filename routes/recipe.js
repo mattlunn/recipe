@@ -6,6 +6,7 @@ module.exports.init = function (app) {
 
 	// recipe?name=Lemon&ingredient=Chicken&ingredient=Thyme&time=25&page=1
 	app.get(['/recipe', '/'], function (req, res, next) {
+		var per = 10;
 		var page = 1;
 		var filter = {
 			ingredients: [],
@@ -43,10 +44,16 @@ module.exports.init = function (app) {
 			page = parseInt(req.query.page, 10);
 		}
 
-		models.Recipe.findAll(filter.name, filter.ingredients, filter.time, page).then(function (recipes) {
+		q.all([
+			models.Recipe.findAll(filter.name, filter.ingredients, filter.time, page, per),
+			models.Recipe.countAll(filter.name, filter.ingredients, filter.time)
+		]).spread(function (recipes, count) {
 			res.render('recipe/index', {
 				recipes: recipes,
-				filter: filter
+				filter: filter,
+				count: count,
+				page: page,
+				pages: Math.ceil(count / per)
 			});
 		}).done();
 	});

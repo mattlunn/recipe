@@ -8,7 +8,7 @@ var recipe = module.exports = new require('mongoose').Schema({
 	ingredients: [ingredient]
 });
 
-recipe.statics.findAll = function (name, ingredients, time) {
+function buildCriteria(name, ingredients, time) {
 	var criteria = {};
 
 	if (typeof name === 'string') {
@@ -33,7 +33,15 @@ recipe.statics.findAll = function (name, ingredients, time) {
 		};
 	}
 
-	return this.findQ(criteria);
+	return criteria;
+}
+
+recipe.statics.findAll = function (name, ingredients, time, page, per) {
+	return this.find(buildCriteria(name, ingredients, time)).limit(per).skip((page * per) - per).execQ();
+};
+
+recipe.statics.countAll = function (name, ingredients, time) {
+	return this.count(buildCriteria(name, ingredients, time)).execQ();
 };
 
 recipe.statics.findById = function (id) {
