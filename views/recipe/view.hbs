@@ -1,2 +1,28 @@
 <h1>{{recipe.name}}</h1>
-<img src="/{{recipe.image}}" />
+<img src="/{{recipe.image}}" style="width: 100%" class="img-thumbnail banner-image" />
+<div class="row">
+	<div class="col-md-4">
+		<ul class="list-group">
+			{{#each recipe.ingredients}}
+				<li class="list-group-item">
+					{{this.quantity}}
+
+					{{#if this.is_whole}}
+						x
+					{{else}}
+						{{this.measure}}
+					{{/if}}
+
+					{{this.name}}
+				</li>
+			{{/each}}
+		</ul>
+	</div>
+	<div class="col-md-8">
+		<ul>
+			{{#each recipe.steps}}
+				<li>{{this}}</li>
+			{{/each}}
+		</ul>
+	</div>
+</div>

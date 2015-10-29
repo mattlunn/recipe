@@ -4,3 +4,7 @@ var ingredient = module.exports = new require('mongoose').Schema({
 	quantity: Number,
 	measure: String
 });
+
+ingredient.virtual('is_whole').get(function () {
+	return this.measure === 'whole';
+});

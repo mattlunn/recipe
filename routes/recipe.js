@@ -1,7 +1,7 @@
 module.exports.init = function (app) {
 	var models = require('../models');
 
-	app.get('/recipe', function (req, res, next) {
+	app.get(['/recipe', '/'], function (req, res, next) {
 		models.Recipe.findAll().then(function (recipes) {
 			res.render('recipe/index', {
 				recipes: recipes

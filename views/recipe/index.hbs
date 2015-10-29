@@ -1,7 +1,25 @@
 <h1>Recipes</h1>
 
-<ul>
-	{{#each recipes}}
-		<li><a href="/recipe/view/{{this.id}}">{{this.name}}</a></li>
-	{{/each}}
-</ul>
+{{#if recipes.length}}
+	<table class="table">
+		<tbody>
+			{{#each recipes}}
+				<tr>
+					<th><a href="/recipe/view/{{this.id}}">{{this.name}}</a></th>
+					<td>{{this.time}}mins</td>
+					<td>
+						{{#each this.ingredients}}
+							{{#if this.is_main}}
+								{{this.name}},
+							{{/if}}
+						{{/each}}
+					</td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+{{else}}
+	<div class="alert alert-info" role="alert">
+		<p>Sorry, we currently have no recipes for you. Hopefully you're not hungry.</p>
+	</div>
+{{/if}}
