@@ -6,7 +6,9 @@
     "express": "^4.0.0",
     "express-handlebars": "^2.0.1",
     "mongoose": "^4.2.3",
-    "mongoose-q": "^0.1.0"
+    "mongoose-q": "^0.1.0",
+    "q": "^1.4.1",
+    "validator": "^4.2.1"
   },
   "author": {
     "name": "Matt Lunn",
