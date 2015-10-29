@@ -5,3 +5,7 @@ img.banner-image {
 h1.recipe-header small {
 	display: block;
 }
+
+#recipe-ingredient-container .input-group {
+	margin-bottom: 10px;
+}

@@ -1,3 +1,4 @@
+var utils = require('../utils');
 var ingredient = require('./ingredient');
 var recipe = module.exports = new require('mongoose').Schema({
 	name: String,
@@ -7,8 +8,32 @@ var recipe = module.exports = new require('mongoose').Schema({
 	ingredients: [ingredient]
 });
 
-recipe.statics.findAll = function () {
-	return this.findQ();
+recipe.statics.findAll = function (name, ingredients, time) {
+	var criteria = {};
+
+	if (typeof name === 'string') {
+		criteria.name = new RegExp('\\b' + utils.regexEscape(name), 'i');
+	}
+
+	if (typeof time === 'number') {
+		criteria.time = {
+			$lt: time
+		};
+	}
+
+	if (Array.isArray(ingredients) && ingredients.length) {
+		criteria.ingredients = {
+			$all: ingredients.map(function (ingredient) {
+				return {
+					$elemMatch: {
+						name: ingredient
+					}
+				};
+			})
+		};
+	}
+
+	return this.findQ(criteria);
 };
 
 recipe.statics.findById = function (id) {

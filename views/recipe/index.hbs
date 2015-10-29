@@ -1,25 +1,71 @@
 <h1>Recipes</h1>
 
-{{#if recipes.length}}
-	<table class="table">
-		<tbody>
-			{{#each recipes}}
-				<tr>
-					<th><a href="/recipe/view/{{this.id}}">{{this.name}}</a></th>
-					<td>{{this.time}}mins</td>
-					<td>
-						{{#each this.ingredients}}
-							{{#if this.is_main}}
-								{{this.name}},
-							{{/if}}
-						{{/each}}
-					</td>
-				</tr>
-			{{/each}}
-		</tbody>
-	</table>
-{{else}}
-	<div class="alert alert-info" role="alert">
-		<p>Sorry, we currently have no recipes for you. Hopefully you're not hungry.</p>
+<div class="row">
+	<div class="col-md-9">
+		{{#if recipes.length}}
+			<table class="table">
+				<tbody>
+					{{#each recipes}}
+						<tr>
+							<th><a href="/recipe/view/{{this.id}}">{{this.name}}</a></th>
+							<td>{{this.time}}mins</td>
+							<td>
+								{{#each this.ingredients}}
+									{{#if this.is_main}}
+										{{this.name}},
+									{{/if}}
+								{{/each}}
+							</td>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		{{else}}
+			<div class="alert alert-info" role="alert">
+				<p>Sorry, we currently have no recipes for you. Hopefully you're not hungry.</p>
+			</div>
+		{{/if}}
 	</div>
-{{/if}}
+
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<form>
+					<div class="form-group">
+						<label id="recipe-name">Name</label>
+						<input type="text" class="form-control" name="name" id="recipe-name" placeholder="Fruit Risotto" value="{{filter.name}}"/>
+					</div>
+					<div class="form-group" id="recipe-ingredient-container">
+						<label>Ingredients</label>
+						{{#each filter.ingredients}}
+							<div class="input-group">
+								<input type="text" class="form-control" value="{{this}}" placeholder="Apples" name="ingredient">
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button"><i class="glyphicon glyphicon-plus"></i></button>
+								</span>
+							</div>
+						{{/each}}
+
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Apples" name="ingredient">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button"><i class="glyphicon glyphicon-plus"></i></button>
+							</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="recipe-time">Max Cooking Time</label>
+						<input type="number" min="1" step="1" name="time" class="form-control" placeholder="30"
+							{{#if (isMax filter.time)}}
+								value=""
+							{{else}}
+								value="{{filter.time}}"
+							{{/if}}
+						/>
+					</div>
+					<button type="submit" class="btn btn-default">Filter</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

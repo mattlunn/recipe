@@ -4,16 +4,54 @@ module.exports.init = function (app) {
 	var errors = require('../errors');
 	var q = require('q');
 
+	// recipe?name=Lemon&ingredient=Chicken&ingredient=Thyme&time=25&page=1
 	app.get(['/recipe', '/'], function (req, res, next) {
-		models.Recipe.findAll().then(function (recipes) {
+		var page = 1;
+		var filter = {
+			ingredients: [],
+			name: null,
+			time:  Number.MAX_VALUE
+		};
+
+		if (typeof req.query.name === 'string' && req.query.name.length) {
+			filter.name = req.query.name;
+		}
+
+		if (typeof req.query.ingredient === 'string') {
+			req.query.ingredient = [req.query.ingredient];
+		}
+
+		if (Array.isArray(req.query.ingredient)) {
+			for (var i=0;i<req.query.ingredient.length;i++) {
+				var element = req.query.ingredient[i];
+
+				if (typeof element === 'string' && element.length) {
+					filter.ingredients.push(element);
+				}
+			}
+		}
+
+		if (validator.isInt(req.query.time, {
+			min: 1
+		})) {
+			filter.time = parseInt(req.query.time, 10);
+		}
+
+		if (validator.isInt(req.query.page, {
+			min: 1
+		})) {
+			page = parseInt(req.query.page, 10);
+		}
+
+		models.Recipe.findAll(filter.name, filter.ingredients, filter.time, page).then(function (recipes) {
 			res.render('recipe/index', {
-				recipes: recipes
+				recipes: recipes,
+				filter: filter
 			});
 		}).done();
 	});
 
 	app.get('/recipe/view/:id', function (req, res, next) {
-
 		(function () {
 			if (validator.isMongoId(req.params.id)) {
 				return models.Recipe.findById(req.params.id);
