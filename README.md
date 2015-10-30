@@ -15,3 +15,12 @@
  4. Start the app
 
          node main.js
+
+# Thoughts...
+
+ 1. In a productionised site, I'd have likely seen the need to create a "FoodItem" collection (name, image, calories, ...), and then have "Ingredient"
+  remain a sub-document within "Recipe", albeit with a "food_item_id" relationship. I'd keep the "name" on the "Ingredient" (i.e. denormalize it from "FoodItem.name"),
+  since the "name" is required all the time, and it'll save additional collection queries.
+
+ 2. I'd also minify the CSS and JS in the build step; likely using my own minifier ;)... https://github.com/mattlunn/mini-fier
+
