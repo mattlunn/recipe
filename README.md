@@ -42,7 +42,7 @@
 
  2. Run the lint rules...
 
-        npm lint
+        jscs .
 
 # Thoughts...
 
