@@ -37,7 +37,9 @@ function buildCriteria(name, ingredients, time) {
 }
 
 recipe.statics.findAll = function (name, ingredients, time, page, per) {
-	return this.find(buildCriteria(name, ingredients, time)).limit(per).skip((page * per) - per).execQ();
+	return this.find(buildCriteria(name, ingredients, time)).limit(per).skip((page * per) - per).sort({
+		name: 1
+	}).execQ();
 };
 
 recipe.statics.countAll = function (name, ingredients, time) {
