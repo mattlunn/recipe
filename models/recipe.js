@@ -28,7 +28,7 @@ function buildCriteria(name, ingredients, time) {
 
 	if (typeof time === 'number') {
 		criteria.time = {
-			$lt: time
+			$lte: time
 		};
 	}
 

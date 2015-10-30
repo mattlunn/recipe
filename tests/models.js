@@ -61,6 +61,16 @@ describe('Models', function () {
 				}).done();
 			});
 
+			it('should match recipes which have the max cooking time', function (done) {
+				models.Recipe.findAll(null, null, 25).then(function (results) {
+					results.forEach(function (item) {
+						item.time.should.be.lessThanOrEqual(25);
+					});
+
+					done();
+				}).done();
+			});
+
 			it('should obey page limits', function (done) {
 				q.all([
 					models.Recipe.findAll(null, null, null, 1, 1),

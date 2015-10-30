@@ -20,7 +20,6 @@
     "url": "http://github.com/mattlunn"
   },
   "scripts": {
-    "test": "mocha tests",
-    "lint": "jscs ."
+    "test": "mocha tests"
   }
 }
