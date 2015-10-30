@@ -8,6 +8,17 @@ var recipe = module.exports = new require('mongoose').Schema({
 	ingredients: [ingredient]
 });
 
+/**
+ * Used to build the criteria object to render the /recipe page
+ *
+ * @param name String 'Name' search term of the recipe. Pass null/ undefined if not
+ *        applicable. If provided, will do a "word starts with ___" filter
+ * @param ingredients [String] 'Ingredient' search term(s) of the recipe. AND'd
+ *        together. Pass null/ undefined/ empty array if not applicable
+ * @param time Number 'Max Cooking Time' search filter for the recipe. Pass null/ undefined
+ *        if not applicable.
+ * @return object Search criteria
+ */
 function buildCriteria(name, ingredients, time) {
 	var criteria = {};
 
@@ -36,22 +47,57 @@ function buildCriteria(name, ingredients, time) {
 	return criteria;
 }
 
+/**
+ * Returns a page of Recipe's which match the provided search terms.
+ *
+ * @param name String 'Name' search term of the recipe. Pass null/ undefined if not
+ *        applicable. If provided, will do a "word starts with ___" filter
+ * @param ingredients [String] 'Ingredient' search term(s) of the recipe. AND'd
+ *        together. Pass null/ undefined/ empty array if not applicable
+ * @param time Number 'Max Cooking Time' search filter for the recipe. Pass null/ undefined
+ *        if not applicable.
+ * @param page Number The page of results we want
+ * @param per Number The amount of results we want per page
+ * @return Promise Resolves to provide an array of Recipe models matching the criteria.
+ */
 recipe.statics.findAll = function (name, ingredients, time, page, per) {
 	return this.find(buildCriteria(name, ingredients, time)).limit(per).skip((page * per) - per).sort({
 		name: 1
 	}).execQ();
 };
 
+/**
+ * Counts how many Recipe's match the given criteria.
+ *
+ * @param name String 'Name' search term of the recipe. Pass null/ undefined if not
+ *        applicable. If provided, will do a "word starts with ___" filter
+ * @param ingredients [String] 'Ingredient' search term(s) of the recipe. AND'd
+ *        together. Pass null/ undefined/ empty array if not applicable
+ * @param time Number 'Max Cooking Time' search filter for the recipe. Pass null/ undefined
+ *        if not applicable.
+ * @return Promise Resolves to provide a count of Recipe models matching the criteria.
+ */
 recipe.statics.countAll = function (name, ingredients, time) {
 	return this.count(buildCriteria(name, ingredients, time)).execQ();
 };
 
+/**
+ * Returns the model which matches the ID
+ *
+ * @param id String The ID of the model we want to retrieve
+ * @return Promise Resolves to either null if the ID doesn't exist, or the Recipe model
+ */
 recipe.statics.findById = function (id) {
 	return this.findOneQ({
 		_id: id
 	});
 };
 
+/**
+ * Makes up a method/ recipe steps to give some substance to the /view page...
+ *
+ * @return [String] Where each element is a theoretical step in our method.
+ */
 recipe.virtual('steps').get(function () {
 	var that = this;
 	var ret = [];

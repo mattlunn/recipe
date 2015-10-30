@@ -12,7 +12,11 @@
 
         cp config/config-sample.json config/config.json && vim config/config.json
 
- 4. Start the app
+ 4. Scaffold some data (if desired)
+
+         node scripts/scaffold
+
+ 5. Start the app
 
          node main.js
 
