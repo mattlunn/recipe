@@ -56,6 +56,7 @@ q.all([
 	(new models.Recipe({
 		name: 'Beef Stroganoff',
 		time: 30,
+		image: 'images/recipes/default.jpg',
 
 		ingredients: [new models.Ingredient({
 			name: 'Beef',
