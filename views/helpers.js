@@ -12,4 +12,4 @@ module.exports.dec = function (a, b) {
 
 module.exports.eq = function (a, b) {
 	return a == b;
-}
+};

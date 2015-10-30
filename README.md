@@ -20,6 +20,30 @@
 
          node main.js
 
+# Testing
+
+ 1. You'll need mocha installed globally
+
+         sudo npm install -g mocha
+
+ 2. Install dev dependencies
+
+         npm install --dev
+
+ 3. Run the test suite...
+
+         npm test
+
+# Linting
+
+ 1. You'll need jscs installed globally
+
+        sudo npm install -g jscs
+
+ 2. Run the lint rules...
+
+        npm lint
+
 # Thoughts...
 
  1. In a productionised site, I'd have likely seen the need to create a "FoodItem" collection (name, image, calories, ...), and then have "Ingredient"

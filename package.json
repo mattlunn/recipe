@@ -5,14 +5,22 @@
     "compression": "^1.5.2",
     "express": "^4.0.0",
     "express-handlebars": "^2.0.1",
+    "jscs": "^2.5.0",
     "mongoose": "^4.2.3",
     "mongoose-q": "^0.1.0",
     "q": "^1.4.1",
     "validator": "^4.2.1"
   },
+  "devDependencies": {
+    "should": "^7.1.1"
+  },
   "author": {
     "name": "Matt Lunn",
     "email": "matt@mattlunn.me.uk",
     "url": "http://github.com/mattlunn"
+  },
+  "scripts": {
+    "test": "mocha tests",
+    "lint": "jscs ."
   }
 }

@@ -11,7 +11,7 @@ module.exports.init = function (app) {
 		var filter = {
 			ingredients: [],
 			name: null,
-			time:  Number.MAX_VALUE
+			time: Number.MAX_VALUE
 		};
 
 		if (typeof req.query.name === 'string' && req.query.name.length) {

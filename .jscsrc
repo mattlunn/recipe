@@ -1,0 +1,8 @@
+{
+	"disallowMixedSpacesAndTabs": true,
+	"disallowMultipleSpaces": true,
+	"disallowTrailingWhitespace": true,
+	"excludeFiles": ["public", "node_modules"],
+	"requireSpaceAfterKeywords": true,
+	"requireSemicolons": true
+}
