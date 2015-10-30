@@ -51,4 +51,6 @@
   since the "name" is required all the time, and it'll save additional collection queries.
 
  2. I'd also minify the CSS and JS in the build step; likely using my own minifier ;)... https://github.com/mattlunn/mini-fier
+ 
+ 3. The search is currently case sensitive (e.g. "lemon" won't match "Lemon"). Storing a lower-cased version of the name, and matching against the lower-cased search term would be a solution to this (as the alternative is to search using case-insensitive RegEx search, which avoids indexes).
 
